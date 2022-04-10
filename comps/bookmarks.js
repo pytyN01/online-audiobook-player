@@ -1,14 +1,20 @@
 import { ArrowUpCircle, BookmarkOff } from "tabler-icons-react";
 import { Text, Button, Card } from "@mantine/core";
 
-export default function Bookmarks({
-  player,
-  bookmarks,
-  setBookmarks,
-  gradient,
-}) {
+export default function Bookmarks(props) {
+  const { player, bookmarks, setBookmarks, gradient } = props;
+  const button = { root: { color: "black" } };
+  const card = {
+    root: {
+      color: "white",
+      background: "#282828",
+      minWidth: "350px",
+    },
+  };
+
   function removeBookmark(index) {
     var filteredBookmarks = [...bookmarks];
+
     if (index !== -1) {
       filteredBookmarks.splice(index, 1);
 
@@ -17,6 +23,7 @@ export default function Bookmarks({
       } else {
         setBookmarks(filteredBookmarks);
       }
+
       localStorage.setItem("bookmarks", JSON.stringify(filteredBookmarks));
     }
   }
@@ -27,16 +34,7 @@ export default function Bookmarks({
 
   function renderBookmarks(bookmark, index) {
     return (
-      <Card
-        styles={{
-          root: {
-            color: "white",
-            background: "#282828",
-            minWidth: "350px",
-          },
-        }}
-        key={index}
-      >
+      <Card styles={card} key={index}>
         <Text align="center" size="xl">
           {`${bookmark.name} Bookmark @ ${bookmark.time}`}
         </Text>
@@ -47,22 +45,22 @@ export default function Bookmarks({
 
         <Button
           leftIcon={<ArrowUpCircle size={20} />}
-          styles={{ root: { color: "black" } }}
-          variant="gradient"
-          gradient={gradient}
           onClick={() => goToBookmark(bookmark)}
+          gradient={gradient}
+          variant="gradient"
+          styles={button}
           size="xs"
         >
           Go to Bookmark
         </Button>
         <Button
-          leftIcon={<BookmarkOff size={20} />}
-          styles={{ root: { color: "black" } }}
-          variant="gradient"
-          gradient={gradient}
-          ml={10}
           onClick={() => removeBookmark(index)}
+          leftIcon={<BookmarkOff size={20} />}
+          gradient={gradient}
+          variant="gradient"
+          styles={button}
           size="xs"
+          ml={10}
         >
           Remove Bookmark
         </Button>

@@ -2,8 +2,9 @@ import { Group, Text, Center } from "@mantine/core";
 import { Headphones } from "tabler-icons-react";
 import { Dropzone } from "@mantine/dropzone";
 
-export default function FileDropZone({ setAudio }) {
+export default function FileDropZone(props) {
   const root = { background: "#282828", color: "white" };
+  const { setAudio } = props;
   const dropzone = {
     minHeight: "90vh",
     minWidth: "90vw",

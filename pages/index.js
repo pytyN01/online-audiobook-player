@@ -1,9 +1,10 @@
 import styles from "../styles/Home.module.css";
 
-import { useRef, useState } from "react";
 import Player from "../comps/player";
 import Bookmarks from "../comps/bookmarks";
 import FileDropZone from "../comps/file-dropzone";
+
+import { useRef, useState } from "react";
 
 export default function Home() {
   const gradient = { from: "#dddddd", to: "gold", deg: 105 };

@@ -5,7 +5,8 @@ import { useEffect } from "react";
 
 import "react-h5-audio-player/lib/styles.css";
 
-export default function Player({ url, name, player, setBookmarks, gradient }) {
+export default function Player(props) {
+  const { url, name, player, setBookmarks, gradient } = props;
   const bookmarkStyles = { root: { color: "black" } };
 
   useEffect(() => {
@@ -59,9 +60,9 @@ export default function Player({ url, name, player, setBookmarks, gradient }) {
         <Button
           leftIcon={<Bookmark size={20} />}
           styles={bookmarkStyles}
-          variant="gradient"
-          gradient={gradient}
           onClick={addBookmark}
+          gradient={gradient}
+          variant="gradient"
           size="xs"
         >
           Add Bookmark
@@ -73,8 +74,8 @@ export default function Player({ url, name, player, setBookmarks, gradient }) {
   return (
     <Grid my={20}>
       <AudioPlayer
-        progressJumpStep={30000}
         header={renderHeader(name)}
+        progressJumpStep={30000}
         footer={renderFooter()}
         ref={player}
         src={url}
