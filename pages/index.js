@@ -199,6 +199,11 @@ export default function Home() {
                   <Text size="xl" inline>
                     Drag audiobook here or click to select from files.
                   </Text>
+
+                  <Text mt={10} size="xl" inline>
+                   DOES NOT WORK ON IOS.
+                  </Text>
+
                 </div>
               </Group>
             )}
