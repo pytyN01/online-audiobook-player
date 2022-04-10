@@ -1,5 +1,5 @@
 import "react-h5-audio-player/lib/styles.css";
-import { Bookmark } from "tabler-icons-react";
+import { Bookmark, DeviceAudioTape, Headphones } from "tabler-icons-react";
 import { BookmarkOff } from "tabler-icons-react";
 import { ArrowUpCircle } from "tabler-icons-react";
 
@@ -14,7 +14,7 @@ export default function Home() {
   const [audio, setAudio] = useState(null);
   const [bookmarks, setBookmarks] = useState(null);
 
-  const gradient = { from: "#dddddd", to: "#868686", deg: 105 };
+  const gradient = { from: "#dddddd", to: "gold", deg: 105 };
 
   const player = useRef();
 
@@ -95,8 +95,6 @@ export default function Home() {
           },
         }}
         key={index}
-        mt={20}
-        mb={10}
       >
         <Text align="center" size="xl" mb={20}>
           {`${bookmark.name} Bookmark @ ${bookmark.time}`}
@@ -169,6 +167,7 @@ export default function Home() {
         )}
         {!audio && (
           <Dropzone
+            style={{ background: "#282828", color: "white" }}
             onDrop={(files) => dropFile(files)}
             onReject={() => alert("rejected files")}
             accept={[
@@ -194,6 +193,9 @@ export default function Home() {
                 }}
               >
                 <div>
+                  <Center>
+                    <Headphones size={200} />
+                  </Center>
                   <Text size="xl" inline>
                     Drag audiobook here or click to select from files.
                   </Text>

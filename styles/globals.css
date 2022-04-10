@@ -1,6 +1,5 @@
 html,
 body {
-  min-width: none !important;
   padding: 0;
   margin: 0;
   background: #282828;
@@ -24,7 +23,6 @@ a {
 .rhap_container {
   width: 90vw !important;
   min-width: 350px !important;
-  height: 300px !important;
   outline: 0 !important;
   -webkit-tap-highlight-color: transparent !important;
   display: block !important;
@@ -35,7 +33,7 @@ a {
   position: relative !important;
   overflow: hidden !important;
   background-color: #282828 !important;
-  padding: 16px !important;
+  padding: 0px !important;
   margin-bottom: 0px !important;
 }
 
@@ -79,11 +77,11 @@ a {
 }
 
 .rhap_progress-filled {
-  background: linear-gradient(to right, #ddd, #ddd, #868686) !important;
+  background: linear-gradient(to right, #ddd, gold) !important;
 }
 
 .rhap_main {
-  margin: 25px 0 !important;
+  margin: 0 !important;
 }
 
 .rhap_time {
