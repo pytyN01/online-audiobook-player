@@ -195,7 +195,9 @@ export default function Home() {
                 <div>
                   <Center>
                     <Headphones size={200} />
-                 
+                  </Center>
+
+                  <Center>
                   <Text size="xl" inline>
                     Drag audiobook here or click to select from files.
                   </Text>
@@ -203,8 +205,7 @@ export default function Home() {
                   <Text mt={10} size="xl" inline>
                    DOES NOT WORK ON IOS.
                   </Text>
-
-                  </Center>
+                 </Center>
                 </div>
               </Group>
             )}
