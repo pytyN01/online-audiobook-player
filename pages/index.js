@@ -14,7 +14,7 @@ export default function Home() {
   const [audio, setAudio] = useState(null);
   const [bookmarks, setBookmarks] = useState(null);
 
-  const gradient = { from: "#f8efc1", to: "#FFD636" };
+  const gradient = { from: "#dddddd", to: "#868686", deg: 105 };
 
   const player = useRef();
 
@@ -38,19 +38,17 @@ export default function Home() {
     });
   }
 
-  function formatTime(seconds) {
-    let minutes = Math.floor(seconds / 60);
-    let secs = Math.floor(seconds % 60);
+  function formatTime(value) {
+    const sec = parseInt(value, 10);
+    let hours = Math.floor(sec / 3600);
+    let minutes = Math.floor((sec - hours * 3600) / 60);
+    let seconds = sec - hours * 3600 - minutes * 60;
 
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
 
-    if (secs < 10) {
-      secs = "0" + secs;
-    }
-
-    return minutes + ":" + secs;
+    return hours + ":" + minutes + ":" + seconds;
   }
 
   function addBookmark() {
@@ -97,12 +95,11 @@ export default function Home() {
           },
         }}
         key={index}
-        shadow="lg"
         mt={20}
         mb={10}
       >
         <Text align="center" size="xl" mb={20}>
-          {`${bookmark.name} @ ${bookmark.time}`}
+          {`${bookmark.name} Bookmark @ ${bookmark.time}`}
         </Text>
 
         <Button
