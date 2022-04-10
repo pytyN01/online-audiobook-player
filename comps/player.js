@@ -1,77 +1,41 @@
+import { Text, Button, Grid, Center } from "@mantine/core";
+import AudioPlayer from "react-h5-audio-player";
+import { Bookmark } from "tabler-icons-react";
+import { useEffect } from "react";
+
 import "react-h5-audio-player/lib/styles.css";
 
-import AudioPlayer from "react-h5-audio-player";
-import styles from "../styles/Home.module.css";
-
-import { useRef, useState, useEffect } from "react";
-import { Group, Text, Button, Grid, Card } from "@mantine/core";
-import { Dropzone } from "@mantine/dropzone";
-
-export default function Player({ audio }) {
-  const [bookmarks, setBookmarks] = useState(null);
-  const player = useRef();
+export default function Player({ url, name, player, setBookmarks, gradient }) {
+  const bookmarkStyles = { root: { color: "black" } };
 
   useEffect(() => {
-    const bookmarks = JSON.parse(localStorage.getItem("bookmarks") || null);
+    const localStorageBookmarks = JSON.parse(
+      localStorage.getItem("bookmarks") || null
+    );
 
-    if (bookmarks) {
-      if (audio) {
-        const found = bookmarks.some((el) => el.name === audio.name);
-        console.log("found: ", found);
-      }
-      console.log("bookmarks: ", bookmarks);
-      setBookmarks([...bookmarks]);
-    }
-    if (!bookmarks) {
-      localStorage.setItem("bookmarks", []);
-      setBookmarks(null);
-    }
+    if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
   }, []);
 
-  function goToBookmark(bookmark) {
-    player.current.audio.current.currentTime = bookmark.utime;
-  }
+  function formatTime(value) {
+    const sec = parseInt(value, 10);
+    let hours = Math.floor(sec / 3600);
+    let minutes = Math.floor((sec - hours * 3600) / 60);
+    let seconds = sec - hours * 3600 - minutes * 60;
 
-  function renderBookmarks(bookmark, index) {
-    return (
-      <Card key={index} shadow="lg" mt={20} mb={10}>
-        <Text align="center" size="xl" mb={20}>
-          {`Bookmark @ ${bookmark.time}`}
-        </Text>
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
 
-        <Button onClick={() => goToBookmark(bookmark)} size="xs">
-          Go to Bookmark
-        </Button>
-        <Button ml={10} onClick={() => removeBookmark(index)} size="xs">
-          Remove Bookmark
-        </Button>
-      </Card>
-    );
-  }
-
-  function formatTime(seconds) {
-    let minutes = Math.floor(seconds / 60);
-    let secs = Math.floor(seconds % 60);
-
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-
-    if (secs < 10) {
-      secs = "0" + secs;
-    }
-
-    return minutes + ":" + secs;
+    return hours + ":" + minutes + ":" + seconds;
   }
 
   function addBookmark() {
     let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-
-    const utime = player.current.audio.current.currentTime;
     const time = formatTime(player.current.audio.current.currentTime);
-    const name = audio.name;
+    const utime = player.current.audio.current.currentTime;
+    const note = "Add a note here.";
 
-    const bookmark = { utime: utime, time: time, name: name };
+    const bookmark = { utime: utime, time: time, name: name, note: note };
 
     bookmarks.push(bookmark);
 
@@ -79,36 +43,42 @@ export default function Player({ audio }) {
     setBookmarks(bookmarks);
   }
 
-  function removeBookmark(index) {
-    var filteredBookmarks = [...bookmarks];
-    if (index !== -1) {
-      filteredBookmarks.splice(index, 1);
+  function renderHeader(name) {
+    return (
+      <Center>
+        <Text size="xl" inline>
+          {name}
+        </Text>
+      </Center>
+    );
+  }
 
-      if (filteredBookmarks.length === 0) {
-        setBookmarks(null);
-      } else {
-        setBookmarks(filteredBookmarks);
-      }
-      localStorage.setItem("bookmarks", JSON.stringify(filteredBookmarks));
-    }
+  function renderFooter() {
+    return (
+      <Center>
+        <Button
+          leftIcon={<Bookmark size={20} />}
+          styles={bookmarkStyles}
+          variant="gradient"
+          gradient={gradient}
+          onClick={addBookmark}
+          size="xs"
+        >
+          Add Bookmark
+        </Button>
+      </Center>
+    );
   }
 
   return (
-    <>
-      <Text size="xl" inline>
-        {audio.name}
-      </Text>
-
-      <Grid my={20}>
-        <AudioPlayer progressJumpStep={30000} src={audio.url} ref={player} />
-      </Grid>
-
-      <Button onClick={addBookmark} size="xs">
-        Add Bookmark
-      </Button>
-
-      {bookmarks &&
-        bookmarks.map((bookmark, index) => renderBookmarks(bookmark, index))}
-    </>
+    <Grid my={20}>
+      <AudioPlayer
+        progressJumpStep={30000}
+        header={renderHeader(name)}
+        footer={renderFooter()}
+        ref={player}
+        src={url}
+      />
+    </Grid>
   );
 }

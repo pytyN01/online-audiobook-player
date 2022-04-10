@@ -1,8 +1,4 @@
 {
-    "cSpell.ignoreWords": [
-        "precomposed"
-    ],
-    "cSpell.words": [
-        "rhap"
-    ]
+  "cSpell.ignoreWords": ["precomposed"],
+  "cSpell.words": ["rhap", "tabler"]
 }
