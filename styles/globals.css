@@ -68,8 +68,9 @@ a {
   display: block !important;
 }
 
+
 .rhap_volume-controls {
-  justify-content: center !important;
+    display: none !important;
 }
 
 .rhap_progress-bar {
