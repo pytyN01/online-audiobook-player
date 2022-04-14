@@ -1,6 +1,8 @@
 import Head from "next/head";
 
+import "react-h5-audio-player/lib/styles.css";
 import "../styles/globals.css";
+import "animate.css";
 
 export default function MyApp({ Component, pageProps }) {
   return (

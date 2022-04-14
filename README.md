@@ -12,3 +12,4 @@
 --- react-dom
 --- react-h5-audio-player
 --- tabler-icons-react
+--- animate.css

@@ -3,12 +3,18 @@ body {
   padding: 0;
   margin: 0;
   background: #282828;
+  height: 100vh;
+  width: 100vw;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 html::-webkit-scrollbar {
   display: none;
+}
+
+#🎧 {
+  --animate-duration: 1.6s;
 }
 
 a {
@@ -20,8 +26,16 @@ a {
   box-sizing: border-box;
 }
 
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .rhap_container {
-  width: 90vw !important;
+  width: 70vw !important;
   min-width: 350px !important;
   outline: 0 !important;
   -webkit-tap-highlight-color: transparent !important;
@@ -35,6 +49,10 @@ a {
   background-color: #282828 !important;
   padding: 0px !important;
   margin-bottom: 0px !important;
+}
+
+.rhap_progress-section {
+  margin: 0 30px;
 }
 
 .rhap_main-controls-button {
@@ -68,9 +86,8 @@ a {
   display: block !important;
 }
 
-
 .rhap_volume-controls {
-    display: none !important;
+  display: none !important;
 }
 
 .rhap_progress-bar {

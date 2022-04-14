@@ -1,5 +1,3 @@
-import styles from "../styles/Home.module.css";
-
 import Player from "../comps/player";
 import Bookmarks from "../comps/bookmarks";
 import FileDropZone from "../comps/file-dropzone";
@@ -13,8 +11,8 @@ export default function Home() {
   const player = useRef();
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
+    <>
+      <main className="main">
         {audio && (
           <Player
             setBookmarks={(x) => setBookmarks(x)}
@@ -32,8 +30,8 @@ export default function Home() {
             gradient={gradient}
           />
         )}
-        {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
       </main>
-    </div>
+      {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
+    </>
   );
 }

@@ -3,13 +3,22 @@ import { Headphones } from "tabler-icons-react";
 import { Dropzone } from "@mantine/dropzone";
 
 export default function FileDropZone(props) {
-  const root = { background: "#282828", color: "white" };
   const { setAudio } = props;
-  const dropzone = {
-    minHeight: "90vh",
-    minWidth: "90vw",
-    pointerEvents: "none",
+
+  const styles = {
+    dropzoneRoot: {
+      background: "#282828",
+      borderRadius: "0px",
+      color: "white",
+      border: "none",
+      padding: "0px",
+    },
+    dropzone: {
+      pointerEvents: "none",
+      height: "100vh",
+    },
   };
+
   const audioFormats = [
     ".aif",
     ".cda",
@@ -23,6 +32,7 @@ export default function FileDropZone(props) {
   ];
 
   function dropFile(files) {
+    console.log(files);
     setAudio({
       url: URL.createObjectURL(files[0]),
       name: files[0].name.split(".")[0],
@@ -31,27 +41,29 @@ export default function FileDropZone(props) {
 
   return (
     <Dropzone
-      onReject={() => alert("rejected file type")}
+      onReject={() => alert("sorry: file type was rejected")}
       onDrop={(files) => dropFile(files)}
       accept={audioFormats}
-      style={root}
+      style={styles.dropzoneRoot}
     >
       {() => (
-        <Group position="center" spacing="xl" style={dropzone}>
+        <Group position="center" spacing="xl" style={styles.dropzone}>
           <div>
             <Center>
-              <Headphones size={200} />
+              <Headphones
+                className="animate__animated animate__infinite infinite animate__tada"
+                size={200}
+                id="🎧"
+              />
             </Center>
 
             <Center>
-              <Text size="xl">
-                Drag audiobook here or click to select from files.
-              </Text>
+              <Text size="xl">Drag 🎵 here or 👆 to select from your 💾</Text>
             </Center>
 
             <Center>
-              <Text mt={10} size="xl">
-                DOES NOT WORK ON IOS.
+              <Text mt={10} size="xs">
+                DOES NOT WORK ON IOS
               </Text>
             </Center>
           </div>
