@@ -48,7 +48,6 @@ export default function Bookmarks(props) {
             <ActionIcon
               onClick={() => goToBookmark(bookmark)}
               styles={styles.button}
-              ref={goTo}
               variant="filled"
               radius="xl"
               size="xl"
