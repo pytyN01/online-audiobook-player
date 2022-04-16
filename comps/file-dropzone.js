@@ -32,43 +32,46 @@ export default function FileDropZone(props) {
   ];
 
   function dropFile(files) {
-    console.log(files);
     setAudio({
       url: URL.createObjectURL(files[0]),
       name: files[0].name.split(".")[0],
     });
   }
 
+  function renderDropzoneCore() {
+    return (
+      <Group position="center" spacing="xl" style={styles.dropzone}>
+        <div>
+          <Center>
+            <Headphones
+              className="animate__animated animate__infinite infinite animate__tada"
+              size={200}
+              id="🎧"
+            />
+          </Center>
+
+          <Center>
+            <Text size="xl">drag or 👆 here to select 🎵 from your 💾</Text>
+          </Center>
+
+          <Center>
+            <Text mt={10} size="xs">
+              does not work on ios
+            </Text>
+          </Center>
+        </div>
+      </Group>
+    );
+  }
+
   return (
     <Dropzone
-      onReject={() => alert("sorry: file type was rejected")}
+      onReject={() => alert("sorry: file type was REJECTED")}
       onDrop={(files) => dropFile(files)}
-      accept={audioFormats}
       style={styles.dropzoneRoot}
+      accept={audioFormats}
     >
-      {() => (
-        <Group position="center" spacing="xl" style={styles.dropzone}>
-          <div>
-            <Center>
-              <Headphones
-                className="animate__animated animate__infinite infinite animate__tada"
-                size={200}
-                id="🎧"
-              />
-            </Center>
-
-            <Center>
-              <Text size="xl">Drag 🎵 here or 👆 to select from your 💾</Text>
-            </Center>
-
-            <Center>
-              <Text mt={10} size="xs">
-                DOES NOT WORK ON IOS
-              </Text>
-            </Center>
-          </div>
-        </Group>
-      )}
+      {renderDropzoneCore}
     </Dropzone>
   );
 }

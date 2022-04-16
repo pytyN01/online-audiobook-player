@@ -1,5 +1,5 @@
 import { Text, Grid, Center, Button, Group, ActionIcon } from "@mantine/core";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import {
   Bookmark,
@@ -11,16 +11,7 @@ import {
 
 export default function Player(props) {
   const { url, name, player, setBookmarks } = props;
-  const [speed, setSpeed] = useState({
-    speed: 1,
-    ref: null,
-  });
-
-  const b = useRef();
-  const b5 = useRef();
-  const b1 = useRef();
-  const b15 = useRef();
-  const b2 = useRef();
+  const [speed, setSpeed] = useState(1);
 
   const styles = {
     bookmark: {
@@ -53,30 +44,6 @@ export default function Player(props) {
     if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
   }, []);
 
-  useEffect(() => {
-    console.log("speed: ", speed.speed);
-    console.log("ref: ", speed.ref);
-
-    speed.ref && animateCSS(speed.ref, "rubberBand");
-  }, [speed]);
-
-  function animateCSS(ref, animation, prefix = "animate__") {
-    const animationName = `${prefix}${animation}`;
-
-    ref.current.classList.add(`${prefix}animated`, animationName);
-    ref.current.classList.add(`${prefix}fast`, animationName);
-
-    function handleAnimationEnd(event) {
-      event.stopPropagation();
-      ref.current.classList.remove(`${prefix}animated`, animationName);
-      ref.current.classList.remove(`${prefix}fast`, animationName);
-    }
-
-    ref.current.addEventListener("animationend", handleAnimationEnd, {
-      once: true,
-    });
-  }
-
   function formatTime(value) {
     const sec = parseInt(value, 10);
     let hours = Math.floor(sec / 3600);
@@ -88,6 +55,11 @@ export default function Player(props) {
     if (seconds < 10) seconds = "0" + seconds;
 
     return hours + ":" + minutes + ":" + seconds;
+  }
+
+  function setPlaybackSpeed(speed) {
+    player.current.audio.current.playbackRate = speed;
+    setSpeed({ speed: speed });
   }
 
   function addBookmark() {
@@ -102,29 +74,12 @@ export default function Player(props) {
 
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
     setBookmarks(bookmarks);
-
-    // animateCSS(b, "fadeInDown");
-    // animateCSS(b, "fadeOutDown");
-    // animateCSS(b, "backInDown");
-    // animateCSS(b, "backOutDown");
-    // animateCSS(b, "bounceInDown");
-    // animateCSS(b, "bounceOutDown");
-    // animateCSS(b, "zoomInDown");
-    animateCSS(b, "zoomOutDown");
-    // animateCSS(b, "slideInDown");
-    // animateCSS(b, "slideOutDown");
-  }
-
-  function setPlaybackSpeed(ref, speed) {
-    // animateCSS(ref, "bounce");
-    player.current.audio.current.playbackRate = speed;
-    setSpeed({ speed: speed, ref: ref });
   }
 
   function renderHeader(name) {
     return (
       <Center mt={20}>
-        <Text weight={700} size="xl" inline>
+        <Text weight={700} size="xl">
           {name}
         </Text>
       </Center>
@@ -136,47 +91,43 @@ export default function Player(props) {
       <>
         <Group mb={30} styles={styles.playback}>
           <ActionIcon
-            onClick={() => setPlaybackSpeed(b5, 0.5)}
+            onClick={() => setPlaybackSpeed(0.5)}
             radius="lg"
-            size={speed.speed === 0.5 ? "lg" : "md"}
+            size={speed === 0.5 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
-            ref={b5}
           >
-            <Multiplier05x size={speed.speed === 0.5 ? 30 : 20} />
+            <Multiplier05x size={speed === 0.5 ? 35 : 20} />
           </ActionIcon>
 
           <ActionIcon
-            onClick={() => setPlaybackSpeed(b1, 1)}
+            onClick={() => setPlaybackSpeed(1)}
             radius="lg"
-            size={speed.speed === 1 ? "lg" : "md"}
+            size={speed === 1 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
-            ref={b1}
           >
-            <Multiplier1x size={speed.speed === 1 ? 30 : 20} />
+            <Multiplier1x size={speed === 1 ? 35 : 20} />
           </ActionIcon>
 
           <ActionIcon
-            onClick={() => setPlaybackSpeed(b15, 1.5)}
+            onClick={() => setPlaybackSpeed(1.5)}
             radius="lg"
-            size={speed.speed === 1.5 ? "lg" : "md"}
+            size={speed === 1.5 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
-            ref={b15}
           >
-            <Multiplier15x size={speed.speed === 1.5 ? 30 : 20} />
+            <Multiplier15x size={speed === 1.5 ? 35 : 20} />
           </ActionIcon>
 
           <ActionIcon
-            onClick={() => setPlaybackSpeed(b2, 2)}
+            onClick={() => setPlaybackSpeed(2)}
             radius="lg"
-            size={speed.speed === 2 ? "lg" : "md"}
+            size={speed === 2 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
-            ref={b2}
           >
-            <Multiplier2x size={speed.speed === 2 ? 30 : 20} />
+            <Multiplier2x size={speed === 2 ? 35 : 20} />
           </ActionIcon>
         </Group>
 
@@ -187,7 +138,6 @@ export default function Player(props) {
           variant="filled"
           radius="lg"
           size="xs"
-          ref={b}
           mt={2}
         >
           Add
