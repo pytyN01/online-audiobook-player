@@ -23,25 +23,18 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="icon"
-          sizes="15x16"
+          sizes="16x16"
           type="image/png"
           href="/icons/icon-16x16.png"
         />
         <link
           rel="icon"
-          sizes="30x32"
+          sizes="32x32"
           type="image/png"
           href="/icons/icon-32x32.png"
         />
+        <link rel="apple-touch-icon" href="/icons/icon-152x152.png"></link>
         <link
-          sizes="143x152"
-          type="image/png"
-          rel="apple-touch-icon"
-          href="/icons/icon-152x152.png"
-        ></link>
-        <link
-          sizes="143x152"
-          type="image/png"
           href="/icons/icon-152x152.png"
           rel="apple-touch-icon-precomposed"
         ></link>
