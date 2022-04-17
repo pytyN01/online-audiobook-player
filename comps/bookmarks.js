@@ -1,5 +1,10 @@
-import { Text, Card, Grid, ActionIcon, Group } from "@mantine/core";
-import { ArrowUpCircle, BookmarkOff } from "tabler-icons-react";
+import { Text, Card, Grid, ActionIcon, Group, Input } from "@mantine/core";
+import {
+  ArrowUpCircle,
+  BookmarkOff,
+  DeviceFloppy,
+  Notebook,
+} from "tabler-icons-react";
 
 export default function Bookmarks(props) {
   const { player, bookmarks, setBookmarks } = props;
@@ -11,6 +16,7 @@ export default function Bookmarks(props) {
         color: "white",
         background: "#282828",
         minWidth: "350px",
+        paddingTop: "0 !important",
       },
     },
   };
@@ -31,6 +37,14 @@ export default function Bookmarks(props) {
     }
   }
 
+  const updateBookmark = (index, e) => {
+    const newBookmarks = [...bookmarks];
+    newBookmarks[index].note = e.target.value;
+    setBookmarks(newBookmarks);
+
+    localStorage.setItem("bookmarks", JSON.stringify(newBookmarks));
+  };
+
   function goToBookmark(bookmark) {
     player.current.audio.current.currentTime = bookmark.utime;
   }
@@ -49,21 +63,32 @@ export default function Bookmarks(props) {
               onClick={() => goToBookmark(bookmark)}
               styles={styles.button}
               variant="filled"
-              radius="xl"
-              size="xl"
+              radius="lg"
+              size="lg"
             >
-              <ArrowUpCircle size={26} />
+              <ArrowUpCircle size={20} />
             </ActionIcon>
+
             <ActionIcon
               onClick={() => removeBookmark(index)}
               styles={styles.button}
               variant="filled"
-              radius="xl"
-              size="xl"
+              radius="lg"
+              size="lg"
             >
-              <BookmarkOff size={26} />
+              <BookmarkOff size={20} />
             </ActionIcon>
           </Group>
+
+          <Input
+            onChange={(e) => updateBookmark(index, e)}
+            onKeyUp={(e) => {
+              if (e.keyCode === 13) e.target.blur();
+            }}
+            icon={<Notebook color="#282828" size={26} />}
+            value={bookmark.note}
+            mt={10}
+          />
         </Card>
       </Grid>
     );

@@ -11,7 +11,6 @@ import {
 
 export default function Player(props) {
   const { url, name, player, setBookmarks } = props;
-  const [speed, setSpeed] = useState(1);
 
   const styles = {
     bookmark: {
@@ -59,14 +58,13 @@ export default function Player(props) {
 
   function setPlaybackSpeed(speed) {
     player.current.audio.current.playbackRate = speed;
-    setSpeed({ speed: speed });
   }
 
   function addBookmark() {
     let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
     const time = formatTime(player.current.audio.current.currentTime);
     const utime = player.current.audio.current.currentTime;
-    const note = "Add a note here.";
+    const note = "add a note here...";
 
     const bookmark = { utime: utime, time: time, name: name, note: note };
 
@@ -92,42 +90,42 @@ export default function Player(props) {
         <Group mb={30} styles={styles.playback}>
           <ActionIcon
             onClick={() => setPlaybackSpeed(0.5)}
-            radius="lg"
-            size={speed === 0.5 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
+            radius="lg"
+            size="md"
           >
-            <Multiplier05x size={speed === 0.5 ? 35 : 20} />
+            <Multiplier05x size={20} />
           </ActionIcon>
 
           <ActionIcon
             onClick={() => setPlaybackSpeed(1)}
-            radius="lg"
-            size={speed === 1 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
+            radius="lg"
+            size="md"
           >
-            <Multiplier1x size={speed === 1 ? 35 : 20} />
+            <Multiplier1x size={20} />
           </ActionIcon>
 
           <ActionIcon
             onClick={() => setPlaybackSpeed(1.5)}
-            radius="lg"
-            size={speed === 1.5 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
+            radius="lg"
+            size="md"
           >
-            <Multiplier15x size={speed === 1.5 ? 35 : 20} />
+            <Multiplier15x size={20} />
           </ActionIcon>
 
           <ActionIcon
             onClick={() => setPlaybackSpeed(2)}
-            radius="lg"
-            size={speed === 2 ? "lg" : "md"}
             styles={styles.action}
             variant="filled"
+            radius="lg"
+            size="md"
           >
-            <Multiplier2x size={speed === 2 ? 35 : 20} />
+            <Multiplier2x size={20} />
           </ActionIcon>
         </Group>
 
