@@ -1,6 +1,7 @@
 {
   "name": "OAP",
   "short_name": "OAP",
+  "lang": "en-US",
   "theme_color": "#282828",
   "background_color": "#000",
   "display": "fullscreen",
