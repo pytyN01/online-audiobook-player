@@ -51,7 +51,7 @@ export default function FileDropZone(props) {
           </Center>
 
           <Center>
-            <Text size="xl">drag or 👆 here to select 🎵 from your 💾</Text>
+            <Text size="xl">drag or 👆 to select 🎵 from your 💾</Text>
           </Center>
 
           <Center>
