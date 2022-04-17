@@ -14,7 +14,7 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="theme-color" content="#282828" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="keywords" content="online, audiobook, player" />
-        <meta name="description" content="Online audiobook player" />
+        <meta name="description" content="Online Audiobook Player" />
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5,user-scalable=yes"

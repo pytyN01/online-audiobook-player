@@ -1,6 +1,6 @@
 {
-  "name": "Online Audiobook Player",
-  "short_name": "Online Audiobook Player",
+  "name": "OAP",
+  "short_name": "OAP",
   "theme_color": "#282828",
   "background_color": "#000",
   "display": "fullscreen",
