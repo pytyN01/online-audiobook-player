@@ -1,6 +1,6 @@
-import Player from "../comps/player";
-import Bookmarks from "../comps/bookmarks";
-import FileDropZone from "../comps/file-dropzone";
+import Player from "../comps/player/index";
+import Bookmarks from "../comps/bookmarks/index";
+import FileDropZone from "../comps/dropzone/index";
 
 import { useRef, useState } from "react";
 

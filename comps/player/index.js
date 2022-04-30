@@ -1,5 +1,5 @@
 import { Text, Grid, Center, Button, Group, ActionIcon } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import {
   Bookmark,
@@ -8,6 +8,7 @@ import {
   Multiplier1x,
   Multiplier2x,
 } from "tabler-icons-react";
+import Header from "./header";
 
 export default function Player(props) {
   const { url, name, player, setBookmarks } = props;
@@ -74,16 +75,6 @@ export default function Player(props) {
     setBookmarks(bookmarks);
   }
 
-  function renderHeader(name) {
-    return (
-      <Center mt={20}>
-        <Text weight={700} size="xl">
-          {name}
-        </Text>
-      </Center>
-    );
-  }
-
   function renderFooter() {
     return (
       <>
@@ -147,7 +138,7 @@ export default function Player(props) {
   return (
     <Grid my={20}>
       <AudioPlayer
-        header={renderHeader(name)}
+        header={<Header name={name} />}
         progressJumpStep={30000}
         footer={renderFooter()}
         ref={player}

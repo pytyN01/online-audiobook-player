@@ -42,12 +42,14 @@ export default function FileDropZone(props) {
     return (
       <Group position="center" spacing="xl" style={styles.dropzone}>
         <div>
-          <Center>
-            <Headphones
+          <Center mb={10}>
+            <span
               className="animate__animated animate__infinite infinite animate__tada"
-              size={200}
+              style={{ fontSize: "150px" }}
               id="🎧"
-            />
+            >
+              🎧
+            </span>
           </Center>
 
           <Center>

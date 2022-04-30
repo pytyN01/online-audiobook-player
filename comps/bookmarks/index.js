@@ -1,10 +1,5 @@
 import { Text, Card, Grid, ActionIcon, Group, Input } from "@mantine/core";
-import {
-  ArrowUpCircle,
-  BookmarkOff,
-  DeviceFloppy,
-  Notebook,
-} from "tabler-icons-react";
+import { ArrowUpCircle, BookmarkOff, Notebook } from "tabler-icons-react";
 
 export default function Bookmarks(props) {
   const { player, bookmarks, setBookmarks } = props;
@@ -62,6 +57,7 @@ export default function Bookmarks(props) {
             <ActionIcon
               onClick={() => goToBookmark(bookmark)}
               styles={styles.button}
+              color=""
               variant="filled"
               radius="lg"
               size="lg"
@@ -85,7 +81,7 @@ export default function Bookmarks(props) {
             onKeyUp={(e) => {
               if (e.keyCode === 13) e.target.blur();
             }}
-            icon={<Notebook color="#282828" size={26} />}
+            icon={<Notebook color="#868686" size={26} />}
             value={bookmark.note}
             mt={10}
           />
