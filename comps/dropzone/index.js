@@ -55,12 +55,6 @@ export default function FileDropZone(props) {
           <Center>
             <Text size="xl">drag or 👆 to select 🎵 from your 💾</Text>
           </Center>
-
-          <Center>
-            <Text mt={10} size="xs">
-              does not work on ios
-            </Text>
-          </Center>
         </div>
       </Group>
     );
