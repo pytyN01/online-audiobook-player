@@ -49,7 +49,6 @@ export default function Bookmarks(props) {
       <Grid key={index} mb={20}>
         <Card styles={styles.card}>
           <Group>
-            <Text size="xl">{bookmark.name}</Text>
             <Text weight={700} size="xl">
               {bookmark.time.replace(/^0(?:0:0?)?/, "")}
             </Text>
