@@ -1,6 +1,6 @@
 # Online Audiobook Player
 
-## [View Live Demo on Vercel](https://www.oap.vercel.app)
+## [View Live Demo on Vercel](https://oap.vercel.app)
 
 ![View Live Demo via QR code.](https://raw.githubusercontent.com/pytyN01/online-audiobook-player/main/public/oap.png)
 
