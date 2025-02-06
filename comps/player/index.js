@@ -36,12 +36,21 @@ export default function Player(props) {
     },
   };
 
-  useEffect(() => {
-    const localStorageBookmarks = JSON.parse(
-      localStorage.getItem("bookmarks") || null
-    );
-
+useEffect(() => {
+    const localStorageBookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
     if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
+
+    const handleBeforeUnload = () => {
+      if (player.current && player.current.audio.current) {
+        addBookmark();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
 
   function formatTime(value) {
@@ -79,17 +88,7 @@ export default function Player(props) {
     return (
       <>
         <Group mb={30} styles={styles.playback}>
-          <ActionIcon
-            onClick={() => setPlaybackSpeed(0.5)}
-            styles={styles.action}
-            variant="filled"
-            radius="lg"
-            size="md"
-          >
-            <Multiplier05x size={20} />
-          </ActionIcon>
-
-          <ActionIcon
+           <ActionIcon
             onClick={() => setPlaybackSpeed(1)}
             styles={styles.action}
             variant="filled"
@@ -99,6 +98,16 @@ export default function Player(props) {
             <Multiplier1x size={20} />
           </ActionIcon>
 
+          <ActionIcon
+            onClick={() => setPlaybackSpeed(1.25)}
+            styles={styles.action}
+            variant="filled"
+            radius="lg"
+            size="md"
+          >
+            <Multiplier15x size={20} />
+          </ActionIcon>
+              
           <ActionIcon
             onClick={() => setPlaybackSpeed(1.5)}
             styles={styles.action}
