@@ -87,16 +87,6 @@ export default function Player({ name, player, setBookmarks }) {
     <>
       <Group mb={30} styles={styles.playbackGroup}>
         <ActionIcon
-          onClick={() => setPlaybackSpeed(0.5)}
-          styles={styles.playbackButton}
-          variant="filled"
-          radius="lg"
-          size="md"
-        >
-          <Multiplier05x size={20} />
-        </ActionIcon>
-
-        <ActionIcon
           onClick={() => setPlaybackSpeed(1)}
           styles={styles.playbackButton}
           variant="filled"
@@ -104,6 +94,16 @@ export default function Player({ name, player, setBookmarks }) {
           size="md"
         >
           <Multiplier1x size={20} />
+        </ActionIcon>
+
+        <ActionIcon
+          onClick={() => setPlaybackSpeed(1.25)}
+          styles={styles.playbackButton}
+          variant="filled"
+          radius="lg"
+          size="md"
+        >
+          <Multiplier15x size={20} />
         </ActionIcon>
 
         <ActionIcon
@@ -115,7 +115,7 @@ export default function Player({ name, player, setBookmarks }) {
         >
           <Multiplier15x size={20} />
         </ActionIcon>
-
+            
         <ActionIcon
           onClick={() => setPlaybackSpeed(2)}
           styles={styles.playbackButton}
