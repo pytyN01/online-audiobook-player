@@ -33,40 +33,44 @@ export default function Player({ name, player, setBookmarks }) {
   };
 
   useEffect(() => {
-    // Load bookmarks from localStorage on component mount
+  const localStorageBookmarks = JSON.parse(
+    localStorage.getItem("bookmarks") || "[]"
+  );
+
+  if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
+
+  const handleBeforeUnload = () => {
+    if (player.current && player.current.audio.current) {
+      let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+      const utime = player.current.audio.current.currentTime;
+      const time = formatTime(utime);
+
+      // Check if bookmark for this time already exists
+      const exists = bookmarks.some((bookmark) => bookmark.utime === utime);
+
+      if (!exists) {
+        const bookmark = { utime, time, name, note: "Auto-saved on exit" };
+        bookmarks.push(bookmark);
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+        setBookmarks(bookmarks);
+      }
+    }
+  };
+
+  window.addEventListener("beforeunload", handleBeforeUnload);
+  
+  return () => {
+    window.removeEventListener("beforeunload", handleBeforeUnload);
+  };
+}, []);
+
+  useEffect(() => {
     const localStorageBookmarks = JSON.parse(
       localStorage.getItem("bookmarks") || null
     );
 
     if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
-
-    // Add beforeunload event listener to save a bookmark when the app is closed
-    const handleBeforeUnload = () => {
-      const bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-      const currentTime = player.current.audio.current.currentTime;
-      const time = formatTime(currentTime);
-
-      // Check if a bookmark for the current time already exists
-      const bookmarkExists = bookmarks.some(
-        (bookmark) => bookmark.utime === currentTime
-      );
-
-      if (!bookmarkExists) {
-        const note = "Auto-saved bookmark";
-        const bookmark = { utime: currentTime, time: time, name: name, note: note };
-        bookmarks.push(bookmark);
-        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-        setBookmarks(bookmarks);
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [name, player, setBookmarks]);
+  }, []);
 
   function formatTime(value) {
     const sec = parseInt(value, 10);
