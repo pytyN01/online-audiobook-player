@@ -33,11 +33,20 @@ export default function Player({ name, player, setBookmarks }) {
   };
 
   useEffect(() => {
-    const localStorageBookmarks = JSON.parse(
-      localStorage.getItem("bookmarks") || null
-    );
-
+    const localStorageBookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
     if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
+
+    const handleBeforeUnload = () => {
+      if (player.current && player.current.audio.current) {
+        addBookmark();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
 
   function formatTime(value) {
@@ -59,9 +68,12 @@ export default function Player({ name, player, setBookmarks }) {
 
   function addBookmark() {
     let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+
+    if (!player.current || !player.current.audio.current) return;
+
     const time = formatTime(player.current.audio.current.currentTime);
     const utime = player.current.audio.current.currentTime;
-    const note = "add a note here...";
+    const note = "Auto-saved on close";
 
     const bookmark = { utime: utime, time: time, name: name, note: note };
 
