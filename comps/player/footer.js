@@ -33,38 +33,6 @@ export default function Player({ name, player, setBookmarks }) {
   };
 
   useEffect(() => {
-  const localStorageBookmarks = JSON.parse(
-    localStorage.getItem("bookmarks") || "[]"
-  );
-
-  if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
-
-  const handleBeforeUnload = () => {
-    if (player.current && player.current.audio.current) {
-      let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-      const utime = player.current.audio.current.currentTime;
-      const time = formatTime(utime);
-
-      // Check if bookmark for this time already exists
-      const exists = bookmarks.some((bookmark) => bookmark.utime === utime);
-
-      if (!exists) {
-        const bookmark = { utime, time, name, note: "Auto-saved on exit" };
-        bookmarks.push(bookmark);
-        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-        setBookmarks(bookmarks);
-      }
-    }
-  };
-
-  window.addEventListener("beforeunload", handleBeforeUnload);
-  
-  return () => {
-    window.removeEventListener("beforeunload", handleBeforeUnload);
-  };
-}, []);
-
-  useEffect(() => {
     const localStorageBookmarks = JSON.parse(
       localStorage.getItem("bookmarks") || null
     );
