@@ -30,7 +30,7 @@ export default function Player(props) {
     },
   };
 
-useEffect(() => {
+  useEffect(() => {
     const localStorageBookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
     if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
 
@@ -41,9 +41,11 @@ useEffect(() => {
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
-    
+    window.addEventListener("pagehide", handleBeforeUnload); // Fallback for mobile browsers
+
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("pagehide", handleBeforeUnload);
     };
   }, []);
 
@@ -61,33 +63,43 @@ useEffect(() => {
   }
 
   function setPlaybackSpeed(speed) {
-    player.current.audio.current.playbackRate = speed;
+    if (player.current && player.current.audio.current) {
+      player.current.audio.current.playbackRate = speed;
+    }
   }
 
   function addBookmark() {
+    if (!player.current || !player.current.audio.current) {
+      console.error("Player or audio element is not available.");
+      return;
+    }
+
     let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
     const time = formatTime(player.current.audio.current.currentTime);
     const utime = player.current.audio.current.currentTime;
     const note = "add a note here...";
 
-    const bookmark = { utime: utime, time: time, name: name, note: note };
+    const existingBookmark = bookmarks.find((bookmark) => bookmark.utime === utime);
 
-    bookmarks.push(bookmark);
-
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-    setBookmarks(bookmarks);
+    if (!existingBookmark) {
+      const bookmark = { utime: utime, time: time, name: name, note: note };
+      bookmarks.push(bookmark);
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+      setBookmarks(bookmarks);
+    }
   }
 
   function renderFooter() {
     return (
       <>
         <Group mb={30} styles={styles.playback}>
-           <ActionIcon
+          <ActionIcon
             onClick={() => setPlaybackSpeed(1)}
             styles={styles.action}
             variant="filled"
             radius="lg"
             size="md"
+            aria-label="Set playback speed to 1x"
           >
             1x
           </ActionIcon>
@@ -97,37 +109,41 @@ useEffect(() => {
             styles={styles.action}
             variant="filled"
             radius="lg"
-            size="md"
+            size="lg"
+            aria-label="Set playback speed to 1.25x"
           >
             1.25x
           </ActionIcon>
-              
+
           <ActionIcon
-            onClick={() => setPlaybackSpeed(1.50)}
+            onClick={() => setPlaybackSpeed(1.5)}
             styles={styles.action}
             variant="filled"
             radius="lg"
-            size="md"
+            size="lg"
+            aria-label="Set playback speed to 1.5x"
           >
-            1.50x
+            1.5x
           </ActionIcon>
-              
+
           <ActionIcon
             onClick={() => setPlaybackSpeed(1.75)}
             styles={styles.action}
             variant="filled"
             radius="lg"
-            size="md"
+            size="lg"
+            aria-label="Set playback speed to 1.75x"
           >
             1.75x
           </ActionIcon>
-              
+
           <ActionIcon
             onClick={() => setPlaybackSpeed(2)}
             styles={styles.action}
             variant="filled"
             radius="lg"
             size="md"
+            aria-label="Set playback speed to 2x"
           >
             2x
           </ActionIcon>
@@ -141,6 +157,7 @@ useEffect(() => {
           radius="lg"
           size="xs"
           mt={2}
+          aria-label="Add bookmark"
         >
           Add
         </Button>
