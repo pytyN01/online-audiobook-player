@@ -1,13 +1,7 @@
 import { Text, Grid, Center, Button, Group, ActionIcon } from "@mantine/core";
-import { useEffect } from "react";
 import AudioPlayer from "react-h5-audio-player";
-import {
-  Bookmark,
-  Multiplier05x,
-  Multiplier15x,
-  Multiplier1x,
-  Multiplier2x,
-} from "tabler-icons-react";
+import { Bookmark } from "tabler-icons-react";
+import { useEffect } from "react";
 import Header from "./header";
 
 export default function Player(props) {
@@ -18,7 +12,7 @@ export default function Player(props) {
       root: {
         color: "#282828",
         background: "#868686",
-        marginRight: "20px",
+        marginRight: "15px",
         float: "right",
       },
     },
@@ -30,7 +24,7 @@ export default function Player(props) {
     },
     playback: {
       root: {
-        marginLeft: "20px",
+        marginLeft: "15px",
         float: "left",
       },
     },
@@ -95,7 +89,7 @@ useEffect(() => {
             radius="lg"
             size="md"
           >
-            <Multiplier1x size={20} />
+            1x
           </ActionIcon>
 
           <ActionIcon
@@ -105,19 +99,29 @@ useEffect(() => {
             radius="lg"
             size="md"
           >
-            <Multiplier15x size={20} />
+            1.25x
           </ActionIcon>
               
           <ActionIcon
-            onClick={() => setPlaybackSpeed(1.5)}
+            onClick={() => setPlaybackSpeed(1.50)}
             styles={styles.action}
             variant="filled"
             radius="lg"
             size="md"
           >
-            <Multiplier15x size={20} />
+            1.50x
           </ActionIcon>
-
+              
+          <ActionIcon
+            onClick={() => setPlaybackSpeed(1.75)}
+            styles={styles.action}
+            variant="filled"
+            radius="lg"
+            size="md"
+          >
+            1.75x
+          </ActionIcon>
+              
           <ActionIcon
             onClick={() => setPlaybackSpeed(2)}
             styles={styles.action}
@@ -125,7 +129,7 @@ useEffect(() => {
             radius="lg"
             size="md"
           >
-            <Multiplier2x size={20} />
+            2x
           </ActionIcon>
         </Group>
 
