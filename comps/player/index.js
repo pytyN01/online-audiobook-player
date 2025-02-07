@@ -1,11 +1,12 @@
+import { useState, useEffect } from "react"; // Add useState
 import { Text, Grid, Center, Button, Group, ActionIcon } from "@mantine/core";
 import AudioPlayer from "react-h5-audio-player";
 import { Bookmark } from "tabler-icons-react";
-import { useEffect } from "react";
 import Header from "./header";
 
 export default function Player(props) {
   const { url, name, player, setBookmarks } = props;
+  const [playbackSpeed, setPlaybackSpeedState] = useState(1); // State for playback speed
 
   const styles = {
     bookmark: {
@@ -65,6 +66,7 @@ export default function Player(props) {
   function setPlaybackSpeed(speed) {
     if (player.current && player.current.audio.current) {
       player.current.audio.current.playbackRate = speed;
+      setPlaybackSpeedState(speed); // Update state
     }
   }
 
@@ -93,60 +95,24 @@ export default function Player(props) {
     return (
       <>
         <Group mb={30} styles={styles.playback}>
-          <ActionIcon
-            onClick={() => setPlaybackSpeed(1)}
-            styles={styles.action}
-            variant="filled"
-            radius="lg"
-            size="md"
-            aria-label="Set playback speed to 1x"
-          >
-            1x
-          </ActionIcon>
-
-          <ActionIcon
-            onClick={() => setPlaybackSpeed(1.25)}
-            styles={styles.action}
-            variant="filled"
-            radius="lg"
-            size="lg"
-            aria-label="Set playback speed to 1.25x"
-          >
-            1.25x
-          </ActionIcon>
-
-          <ActionIcon
-            onClick={() => setPlaybackSpeed(1.5)}
-            styles={styles.action}
-            variant="filled"
-            radius="lg"
-            size="lg"
-            aria-label="Set playback speed to 1.5x"
-          >
-            1.5x
-          </ActionIcon>
-
-          <ActionIcon
-            onClick={() => setPlaybackSpeed(1.75)}
-            styles={styles.action}
-            variant="filled"
-            radius="lg"
-            size="lg"
-            aria-label="Set playback speed to 1.75x"
-          >
-            1.75x
-          </ActionIcon>
-
-          <ActionIcon
-            onClick={() => setPlaybackSpeed(2)}
-            styles={styles.action}
-            variant="filled"
-            radius="lg"
-            size="md"
-            aria-label="Set playback speed to 2x"
-          >
-            2x
-          </ActionIcon>
+          {[1, 1.25, 1.5, 1.75, 2].map((speed) => (
+            <ActionIcon
+              key={speed}
+              onClick={() => setPlaybackSpeed(speed)}
+              styles={{
+                root: {
+                  color: "#282828",
+                  background: playbackSpeed === speed ? "#ffffff" : "#868686", // White background for active speed
+                },
+              }}
+              variant="filled"
+              radius="lg"
+              size={speed === 1 || speed === 2 ? "md" : "lg"}
+              aria-label={`Set playback speed to ${speed}x`}
+            >
+              {speed}x
+            </ActionIcon>
+          ))}
         </Group>
 
         <Button
