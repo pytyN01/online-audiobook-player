@@ -69,34 +69,27 @@ export default function Player(props) {
       setPlaybackSpeedState(speed); // Update state
     }
   }
-  
-function addBookmark() {
-  if (!player.current || !player.current.audio.current) {
-    console.error("Player or audio element is not available.");
-    return;
+
+  function addBookmark() {
+    if (!player.current || !player.current.audio.current) {
+      console.error("Player or audio element is not available.");
+      return;
+    }
+
+    let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+    const time = formatTime(player.current.audio.current.currentTime);
+    const utime = player.current.audio.current.currentTime;
+    const note = "add a note here...";
+
+    const existingBookmark = bookmarks.find((bookmark) => bookmark.utime === utime);
+
+    if (!existingBookmark) {
+      const bookmark = { utime: utime, time: time, name: name, note: note };
+      bookmarks.push(bookmark);
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+      setBookmarks(bookmarks);
+    }
   }
-
-  const currentTime = player.current.audio.current.currentTime;
-  
-  // Don't allow bookmarking at the start (0 seconds)
-  if (currentTime === 0) {
-    return;
-  }
-
-  let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-  const time = formatTime(currentTime);
-  const utime = currentTime;
-  const note = "add a note here...";
-
-  const existingBookmark = bookmarks.find((bookmark) => bookmark.utime === utime);
-
-  if (!existingBookmark) {
-    const bookmark = { utime: utime, time: time, name: name, note: note };
-    bookmarks.push(bookmark);
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-    setBookmarks(bookmarks);
-  }
-}
 
   function renderFooter() {
     return (
