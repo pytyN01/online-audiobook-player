@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react"; // Add useState
-import { Text, Grid, Center, Button, Group, ActionIcon } from "@mantine/core";
+import { useState, useEffect } from "react";
+import { Text, Grid, Center, Button, Group, ActionIcon, Title, } from "@mantine/core";
 import AudioPlayer from "react-h5-audio-player";
 import { Bookmark } from "tabler-icons-react";
-import Header from "./header";
 
 export default function Player(props) {
   const { url, name, player, setBookmarks } = props;
-  const [playbackSpeed, setPlaybackSpeedState] = useState(1); // State for playback speed
+  const [playbackSpeed, setPlaybackSpeedState] = useState(1);
 
   const styles = {
     bookmark: {
@@ -32,7 +31,9 @@ export default function Player(props) {
   };
 
   useEffect(() => {
-    const localStorageBookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+    const localStorageBookmarks = JSON.parse(
+      localStorage.getItem("bookmarks") || "[]",
+    );
     if (localStorageBookmarks) setBookmarks([...localStorageBookmarks]);
 
     const handleBeforeUnload = () => {
@@ -66,7 +67,7 @@ export default function Player(props) {
   function setPlaybackSpeed(speed) {
     if (player.current && player.current.audio.current) {
       player.current.audio.current.playbackRate = speed;
-      setPlaybackSpeedState(speed); // Update state
+      setPlaybackSpeedState(speed);
     }
   }
 
@@ -81,7 +82,9 @@ export default function Player(props) {
     const utime = player.current.audio.current.currentTime;
     const note = "add a note here...";
 
-    const existingBookmark = bookmarks.find((bookmark) => bookmark.utime === utime);
+    const existingBookmark = bookmarks.find(
+      (bookmark) => bookmark.utime === utime,
+    );
 
     if (!existingBookmark) {
       const bookmark = { utime: utime, time: time, name: name, note: note };
@@ -89,6 +92,16 @@ export default function Player(props) {
       localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
       setBookmarks(bookmarks);
     }
+  }
+
+  function renderHeader() {
+    return (
+      <Center mt={20}>
+        <Title weight={700} size="xl">
+          {name}
+        </Title>
+      </Center>
+    );
   }
 
   function renderFooter() {
@@ -102,7 +115,7 @@ export default function Player(props) {
               styles={{
                 root: {
                   color: "#282828",
-                  background: playbackSpeed === speed ? "#ffffff" : "#868686", // White background for active speed
+                  background: playbackSpeed === speed ? "#ffffff" : "#868686",
                 },
               }}
               variant="filled"
@@ -134,7 +147,7 @@ export default function Player(props) {
   return (
     <Grid my={20}>
       <AudioPlayer
-        header={<Header name={name} />}
+        header={renderHeader()}
         progressJumpStep={30000}
         footer={renderFooter()}
         ref={player}
