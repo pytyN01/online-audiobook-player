@@ -1,7 +1,7 @@
 import Player from "../comps/player/index";
 import Bookmarks from "../comps/bookmarks/index";
 import FileDropZone from "../comps/dropzone/index";
-
+import { Button, Center } from "@mantine/core";
 import { useRef, useState } from "react";
 
 export default function Home() {
@@ -29,6 +29,19 @@ export default function Home() {
             player={player}
             gradient={gradient}
           />
+        )}
+        {audio && (
+          <Center mt={20}>
+            <Button
+              onClick={() => setAudio(null)}
+              variant="filled"
+              radius="lg"
+              color="red"
+              size="md"
+            >
+              Clear Book
+            </Button>
+          </Center>
         )}
       </main>
       {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
