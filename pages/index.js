@@ -14,9 +14,9 @@ export default function Home() {
     close: {
       root: {
         position: "fixed",
-        top: "10px",
-        right: "10px",
-        background: "red",
+        top: "5px",
+        left: "5px",
+        background: "#fa5252",
         zIndex: 1000,
       },
     },
