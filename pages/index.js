@@ -22,6 +22,17 @@ export default function Home() {
 
   return (
     <>
+      {audio && (
+        <Button
+          onClick={() => setAudio(null)}
+          styles={styles.close}
+          variant="filled"
+          radius="lg"
+          size="lg"
+        >
+          X
+        </Button>
+      )}
       <main className="main">
         {audio && (
           <Player
@@ -41,17 +52,6 @@ export default function Home() {
           />
         )}
       </main>
-      {audio && (
-        <Button
-          onClick={() => setAudio(null)}
-          styles={styles.close}
-          variant="filled"
-          radius="lg"
-          size="lg"
-        >
-          X
-        </Button>
-      )}
       {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
     </>
   );
