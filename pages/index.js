@@ -2,13 +2,29 @@ import Player from "../comps/player/index";
 import Bookmarks from "../comps/bookmarks/index";
 import FileDropZone from "../comps/dropzone/index";
 import { Button } from "@mantine/core";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Home() {
-  const gradient = { from: "#dddddd", to: "gold", deg: 105 };
-  const [bookmarks, setBookmarks] = useState(null);
-  const [audio, setAudio] = useState(null);
+  const [bookmarks, setBookmarks] = useState(
+    JSON.parse(localStorage.getItem("bookmarks")) || []
+  );
+  const [audio, setAudio] = useState(() => {
+    const storedAudio = localStorage.getItem("audio");
+    return storedAudio ? JSON.parse(storedAudio) : null;
+  });
+
   const player = useRef();
+
+  useEffect(() => {
+    if (audio) {
+      localStorage.setItem("audio", JSON.stringify(audio));
+    }
+  }, [audio]);
+
+  const clearBook = () => {
+    setAudio(null);
+    localStorage.removeItem("audio");
+  };
 
   const styles = {
     close: {
@@ -17,7 +33,7 @@ export default function Home() {
         top: "5px",
         left: "5px",
         background: "#fa5252",
-        zIndex: 1000,
+        zIndex: 100,
       },
     },
   };
@@ -26,7 +42,7 @@ export default function Home() {
     <>
       {audio && (
         <Button
-          onClick={() => setAudio(null)}
+          onClick={clearBook}
           styles={styles.close}
           variant="filled"
           radius="lg"
@@ -38,23 +54,21 @@ export default function Home() {
       <main className="main">
         {audio && (
           <Player
-            setBookmarks={(x) => setBookmarks(x)}
-            gradient={gradient}
+            setBookmarks={setBookmarks}
             name={audio.name}
             url={audio.url}
             player={player}
           />
         )}
-        {audio && bookmarks && (
+        {audio && bookmarks.length > 0 && (
           <Bookmarks
-            setBookmarks={(x) => setBookmarks(x)}
+            setBookmarks={setBookmarks}
             bookmarks={bookmarks}
             player={player}
-            gradient={gradient}
           />
         )}
       </main>
-      {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
+      {!audio && <FileDropZone setAudio={setAudio} />}
     </>
   );
 }
