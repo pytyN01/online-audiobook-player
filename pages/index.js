@@ -5,25 +5,38 @@ import { Button } from "@mantine/core";
 import { useRef, useState, useEffect } from "react";
 
 export default function Home() {
-  const [bookmarks, setBookmarks] = useState(
-    JSON.parse(localStorage.getItem("bookmarks")) || []
-  );
-  const [audio, setAudio] = useState(() => {
-    const storedAudio = localStorage.getItem("audio");
-    return storedAudio ? JSON.parse(storedAudio) : null;
-  });
-
+  const [bookmarks, setBookmarks] = useState([]);
+  const [audio, setAudio] = useState(null);
   const player = useRef();
 
+  // Load data from localStorage AFTER the component mounts
   useEffect(() => {
-    if (audio) {
+    const storedBookmarks = localStorage.getItem("bookmarks");
+    if (storedBookmarks) {
+      setBookmarks(JSON.parse(storedBookmarks));
+    }
+
+    const storedAudio = localStorage.getItem("audio");
+    if (storedAudio) {
+      setAudio(JSON.parse(storedAudio));
+    }
+  }, []);
+
+  // Update localStorage when bookmarks change
+  useEffect(() => {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
+  // Update localStorage when audio changes (except on first render)
+  useEffect(() => {
+    if (audio !== null) {
       localStorage.setItem("audio", JSON.stringify(audio));
     }
   }, [audio]);
 
   const clearBook = () => {
     setAudio(null);
-    localStorage.removeItem("audio");
+    localStorage.removeItem("audio"); // Only remove when user clicks X
   };
 
   const styles = {
@@ -33,7 +46,7 @@ export default function Home() {
         top: "5px",
         left: "5px",
         background: "#fa5252",
-        zIndex: 100,
+        zIndex: 1000,
       },
     },
   };
