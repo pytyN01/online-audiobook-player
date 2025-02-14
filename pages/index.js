@@ -31,7 +31,7 @@ export default function Home() {
           />
         )}
         {audio && (
-          <Center mt={2}>
+          <Center>
             <Button
               onClick={() => setAudio(null)}
               variant="filled"
