@@ -10,6 +10,16 @@ export default function Home() {
   const [audio, setAudio] = useState(null);
   const player = useRef();
 
+  const styles = {
+    close: {
+      root: {
+        marginRight: "15px",
+        float: "right",
+        color: "red",
+      },
+    },
+  };
+
   return (
     <>
       <main className="main">
@@ -30,20 +40,18 @@ export default function Home() {
             gradient={gradient}
           />
         )}
-        {audio && (
-          <Center>
-            <Button
-              onClick={() => setAudio(null)}
-              variant="filled"
-              radius="lg"
-              color="red"
-              size="md"
-            >
-              Clear Book
-            </Button>
-          </Center>
-        )}
       </main>
+      {audio && (
+        <Button
+          onClick={() => setAudio(null)}
+          styles={styles.close}
+          variant="filled"
+          radius="lg"
+          size="lg"
+        >
+          X
+        </Button>
+      )}
       {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
     </>
   );
