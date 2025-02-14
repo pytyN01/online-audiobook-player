@@ -1,7 +1,7 @@
 import Player from "../comps/player/index";
 import Bookmarks from "../comps/bookmarks/index";
 import FileDropZone from "../comps/dropzone/index";
-import { Button, Center } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { useRef, useState } from "react";
 
 export default function Home() {
@@ -13,9 +13,11 @@ export default function Home() {
   const styles = {
     close: {
       root: {
-        float: "right",
-        color: "white",
+        position: "fixed",
+        top: "10px",
+        right: "10px",
         background: "red",
+        zIndex: 1000,
       },
     },
   };
