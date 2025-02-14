@@ -13,9 +13,9 @@ export default function Home() {
   const styles = {
     close: {
       root: {
-        marginRight: "15px",
         float: "right",
-        color: "red",
+        color: "white",
+        background: "red",
       },
     },
   };
@@ -28,7 +28,7 @@ export default function Home() {
           styles={styles.close}
           variant="filled"
           radius="lg"
-          size="lg"
+          size="sm"
         >
           X
         </Button>
