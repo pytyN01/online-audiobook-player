@@ -24,20 +24,19 @@ export default function Home() {
   };
 
   return (
-    <>
+    <main className="main">
       {audio && (
-        <ActionIcon
-          onClick={clearBook}
-          styles={styles.close}
-          variant="filled"
-          radius="lg"
-          size="lg"
-        >
-          <IconX size={20} />
-        </ActionIcon>
-      )}
-      <main className="main">
-        {audio && (
+        <>
+          <ActionIcon
+            onClick={() => setAudio(null)}
+            styles={styles.close}
+            variant="filled"
+            radius="lg"
+            size="lg"
+          >
+            <IconX size={20} />
+          </ActionIcon>
+
           <Player
             setBookmarks={(x) => setBookmarks(x)}
             gradient={gradient}
@@ -45,17 +44,17 @@ export default function Home() {
             url={audio.url}
             player={player}
           />
-        )}
-        {audio && bookmarks && (
-          <Bookmarks
-            setBookmarks={(x) => setBookmarks(x)}
-            bookmarks={bookmarks}
-            player={player}
-            gradient={gradient}
-          />
-        )}
-      </main>
+        </>
+      )}
+      {audio && bookmarks && (
+        <Bookmarks
+          setBookmarks={(x) => setBookmarks(x)}
+          bookmarks={bookmarks}
+          player={player}
+          gradient={gradient}
+        />
+      )}
       {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
-    </>
+    </main>
   );
 }
