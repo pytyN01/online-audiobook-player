@@ -1,52 +1,24 @@
 import Player from "../comps/player/index";
 import Bookmarks from "../comps/bookmarks/index";
 import FileDropZone from "../comps/dropzone/index";
-import { Button } from "@mantine/core";
-import { useRef, useState, useEffect } from "react";
+import { ActionIcon } from "@mantine/core";
+import { IconX } from "tabler-icons-react";
+import { useRef, useState } from "react";
 
 export default function Home() {
-  const [bookmarks, setBookmarks] = useState([]);
+  const gradient = { from: "#dddddd", to: "gold", deg: 105 };
+  const [bookmarks, setBookmarks] = useState(null);
   const [audio, setAudio] = useState(null);
   const player = useRef();
-
-  // Load data from localStorage AFTER the component mounts
-  useEffect(() => {
-    const storedBookmarks = localStorage.getItem("bookmarks");
-    if (storedBookmarks) {
-      setBookmarks(JSON.parse(storedBookmarks));
-    }
-
-    const storedAudio = localStorage.getItem("audio");
-    if (storedAudio) {
-      setAudio(JSON.parse(storedAudio));
-    }
-  }, []);
-
-  // Update localStorage when bookmarks change
-  useEffect(() => {
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  }, [bookmarks]);
-
-  // Update localStorage when audio changes (except on first render)
-  useEffect(() => {
-    if (audio !== null) {
-      localStorage.setItem("audio", JSON.stringify(audio));
-    }
-  }, [audio]);
-
-  const clearBook = () => {
-    setAudio(null);
-    localStorage.removeItem("audio"); // Only remove when user clicks X
-  };
 
   const styles = {
     close: {
       root: {
         position: "fixed",
-        top: "5px",
-        left: "5px",
+        top: "10px",
+        left: "10px",
         background: "#fa5252",
-        zIndex: 1000,
+        zIndex: 100,
       },
     },
   };
@@ -54,34 +26,36 @@ export default function Home() {
   return (
     <>
       {audio && (
-        <Button
+        <ActionIcon
           onClick={clearBook}
           styles={styles.close}
           variant="filled"
           radius="lg"
-          size="sm"
+          size="lg"
         >
-          X
-        </Button>
+          <IconX size={20} />
+        </ActionIcon>
       )}
       <main className="main">
         {audio && (
           <Player
-            setBookmarks={setBookmarks}
+            setBookmarks={(x) => setBookmarks(x)}
+            gradient={gradient}
             name={audio.name}
             url={audio.url}
             player={player}
           />
         )}
-        {audio && bookmarks.length > 0 && (
+        {audio && bookmarks && (
           <Bookmarks
-            setBookmarks={setBookmarks}
+            setBookmarks={(x) => setBookmarks(x)}
             bookmarks={bookmarks}
             player={player}
+            gradient={gradient}
           />
         )}
       </main>
-      {!audio && <FileDropZone setAudio={setAudio} />}
+      {!audio && <FileDropZone setAudio={(x) => setAudio(x)} />}
     </>
   );
 }
